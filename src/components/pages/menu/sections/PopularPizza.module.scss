@@ -1,0 +1,34 @@
+.PopularPizza {
+	.content {
+		.all_button {
+			margin-bottom: 80px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			.pizza_button {
+				border-radius: 100px;
+				width: 229.93px;
+				height: 62px;
+
+				color: rgba(255, 255, 255, 1);
+				&:hover {
+					background: linear-gradient(
+						215.37deg,
+						rgba(255, 100.17498016357422, 50.40979766845703, 1),
+						rgba(255, 161.99241638183594, 39.78480911254883, 1) 100%
+					);
+				}
+			}
+		}
+
+		.types_of_pizza {
+			// padding-block: 40px;
+			display: flex;
+			justify-content: center;
+			width: 297px;
+			height: 459px;
+			border-radius: 29.53px;
+			background: rgba(33, 10, 1, 1);
+		}
+	}
+}
