@@ -1,0 +1,24 @@
+.PizzaButton {
+	margin-bottom: 80px;
+	.content {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		.pizza_button {
+			width: 229.93px;
+			height: 62px;
+			border-radius: 100px;
+			box-shadow: 0px 4px 15px #240d00;
+			background: rgba(33, 10, 1, 1);
+			font-size: 16px;
+			&:hover {
+				background: linear-gradient(
+					215.37deg,
+					rgba(255, 100.17498016357422, 50.40979766845703, 1),
+					rgba(255, 161.99241638183594, 39.78480911254883, 1) 100%
+				);
+				box-shadow: none;
+			}
+		}
+	}
+}

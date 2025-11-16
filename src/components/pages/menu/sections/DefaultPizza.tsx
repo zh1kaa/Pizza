@@ -2,8 +2,6 @@
 import { useEffect, useState, type FC } from "react";
 import scss from "./DefaultPizza.module.scss";
 import { api } from "@/api";
-import { log } from "console";
-import pizzatype1 from "@/assets/pizzatype1.png";
 
 interface PizzaType {
 	id: number;
@@ -18,7 +16,9 @@ interface PizzaType {
 }
 
 export const DefaultPizza: FC = () => {
+	const [counters, setCounters] = useState<{ [key: number]: number }>({});
 	const [pizzaDefault, setPizzaDefault] = useState<PizzaType[]>([]);
+
 	const getDefaultPizza = async () => {
 		const response = await api.get("/pizza_default");
 		setPizzaDefault(response.data);
@@ -27,42 +27,59 @@ export const DefaultPizza: FC = () => {
 	useEffect(() => {
 		getDefaultPizza();
 	}, []);
+
 	return (
 		<section className={scss.DefaultPizza}>
 			<div className="container">
 				<div className={scss.content}>
-					<div className={scss.all_button}>
-						<button className={scss.pizza_button}>Show All</button>
-						<button className={scss.pizza_button}>Meat</button>
-						<button className={scss.pizza_button}>Vegetarian</button>
-						<button className={scss.pizza_button}>Sea Products</button>
-						<button className={scss.pizza_button}>Mushroom</button>
-					</div>
 					<div className={scss.pizza_list}>
 						{pizzaDefault.map((item) => (
 							<div key={item.id} className={scss.types_of_pizza}>
-								<div className={scss.img_pizza}>
-									{/* <img src={item.image} alt="" /> */}
-									<img src={pizzatype1.src} alt="" />
-								</div>
-								<div className={scss.title}>{item.name}</div>
-								<div className={scss.description}>{item.description}</div>
-								<div className={scss.size_pizza}>{item.sizes.join(" ")}</div>
-								<div className={scss.ingridients}>
-									<button>+ ingridients</button>
-								</div>
-								<div className={scss.pizza_selection}>
-									<div className={scss.price}>
-										{item.price} {item.currency}
+								<img
+									className={scss.img_pizza}
+									src={item.image}
+									alt={item.name}
+								/>
+								<h1 className={scss.title}>{item.name}</h1>
+								<p className={scss.description}>{item.description}</p>
+								<div className={scss.pizza_box}>
+									<div className={scss.size_pizza}>
+										{item.sizes.map((size, index) => (
+											<button key={index}>{size}</button>
+										))}
 									</div>
-									<div className={scss.quantity}>
-										<button>+</button>
-										<button>1</button>
-										<button>-</button>
+									<button className={scss.ingridients}>+ ingridients</button>
+									<div className={scss.pizza_selection}>
+										<span className={scss.price}>
+											{item.price} {item.currency}
+										</span>
+										<div className={scss.quantity}>
+											<button
+												className={scss.quantity_button}
+												onClick={() =>
+													setCounters((prev) => ({
+														...prev,
+														[item.id]: (prev[item.id] || 0) + 1,
+													}))
+												}>
+												+
+											</button>
+											<span className={scss.quantity_number}>
+												{counters[item.id] || 0}
+											</span>
+											<button
+												className={scss.quantity_button}
+												onClick={() =>
+													setCounters((prev) => ({
+														...prev,
+														[item.id]: Math.max(0, (prev[item.id] || 0) - 1),
+													}))
+												}>
+												-
+											</button>
+										</div>
 									</div>
-								</div>
-								<div className={scss.order_now}>
-									<button>order now</button>
+									<button className={scss.order_now}>order now</button>
 								</div>
 							</div>
 						))}

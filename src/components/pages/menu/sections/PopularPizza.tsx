@@ -2,7 +2,6 @@
 import { useEffect, useState, type FC } from "react";
 import scss from "./PopularPizza.module.scss";
 import { api } from "@/api";
-import pizzatype1 from "@/assets/pizzatype1.png";
 
 interface PizzaType {
 	id: number;
@@ -19,9 +18,8 @@ interface PizzaType {
 export const PopularPizza: FC = () => {
 	const [pizzaPopular, setPizzaPopular] = useState<PizzaType[]>([]);
 	const getPopularPizza = async () => {
-		const response = await api.get("/pizza_default");
+		const response = await api.get("/pizza_popular");
 		setPizzaPopular(response.data);
-		// console.log(response.data);
 	};
 	useEffect(() => {
 		getPopularPizza();
@@ -34,27 +32,27 @@ export const PopularPizza: FC = () => {
 					<div className={scss.pizza_list}>
 						{pizzaPopular.map((item) => (
 							<div key={item.id} className={scss.types_of_pizza}>
-								<div className={scss.img_pizza}>
-									<img src={pizzatype1.src} alt="" />
-								</div>
-								<div className={scss.title}>{item.name}</div>
-								<div className={scss.description}>{item.description}</div>
-								<div className={scss.size_pizza}>{item.sizes.join(" ")}</div>
-								<div className={scss.ingridients}>
-									<button>+ ingridients</button>
-								</div>
-								<div className={scss.pizza_selection}>
-									<div className={scss.price}>
-										{item.price} {item.currency}
+								<img className={scss.img_pizza} src={item.image} alt="" />
+								<h1 className={scss.title}>{item.name}</h1>
+								<p className={scss.description}>{item.description}</p>
+								<div className={scss.pizza_box}>
+									<div className={scss.size_pizza}>
+										{item.sizes.map((item, index) => (
+											<button key={index}>{item}</button>
+										))}
 									</div>
-									<div className={scss.quantity}>
-										<button>+</button>
-										<button>1</button>
-										<button>-</button>
+									<button className={scss.ingridients}>+ ingridients</button>
+									<div className={scss.pizza_selection}>
+										<span className={scss.price}>
+											{item.price} {item.currency}
+										</span>
+										<div className={scss.quantity}>
+											<button className={scss.quantity_button}>+</button>
+											<span className={scss.quantity_number}>0</span>
+											<button className={scss.quantity_button}>-</button>
+										</div>
 									</div>
-								</div>
-								<div className={scss.order_now}>
-									<button>order now</button>
+									<button className={scss.order_now}>order now</button>
 								</div>
 							</div>
 						))}

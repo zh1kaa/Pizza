@@ -2,10 +2,9 @@
 import type { FC } from "react";
 import scss from "./Header.module.scss";
 import Link from "next/link";
-import order from "@/assets/order.png";
 import { usePathname } from "next/navigation";
 import { useWindowSize } from "react-use";
-import { Hamburger } from "lucide-react";
+import { Hamburger, ShoppingCart } from "lucide-react";
 
 const links = [
 	{
@@ -68,26 +67,12 @@ export const Header: FC = () => {
 								<Hamburger />
 							</button>
 						)}
-						<img src={order.src} alt="Order" />
+						<button className={scss.order_btn}>
+							<ShoppingCart size={30} />
+						</button>
 					</div>
 				</div>
 			</div>
 		</header>
 	);
 };
-// {isDesktop && (
-// 						<div className={scss.middle}>
-// 							{links.map((item, index) => (
-// 								<Link
-// 									key={index}
-// 									href={item.href}
-// 									className={
-// 										pathname === item.href
-// 											? `${scss.link} ${scss.active}`
-// 											: `${scss.link}`
-// 									}>
-// 									{item.name}
-// 								</Link>
-// 							))}
-// 						</div>
-// 					)}

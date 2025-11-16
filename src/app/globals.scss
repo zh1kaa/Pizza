@@ -4,6 +4,7 @@
 	box-sizing: border-box;
 	button {
 		border: none;
+		cursor: pointer;
 	}
 }
 html {
@@ -24,7 +25,4 @@ a {
 	max-width: 1280px;
 	margin: 0 auto;
 	padding: 0 20px;
-}
-button {
-	cursor: pointer;
 }
