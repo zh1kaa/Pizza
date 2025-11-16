@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState, type FC } from "react";
-import scss from "./PopularPizza.module.scss";
+import scss from "./DefaultPizza.module.scss";
 import { api } from "@/api";
+import { log } from "console";
 import pizzatype1 from "@/assets/pizzatype1.png";
 
 interface PizzaType {
@@ -16,25 +17,32 @@ interface PizzaType {
 	category: Array<string>;
 }
 
-export const PopularPizza: FC = () => {
-	const [pizzaPopular, setPizzaPopular] = useState<PizzaType[]>([]);
-	const getPopularPizza = async () => {
+export const DefaultPizza: FC = () => {
+	const [pizzaDefault, setPizzaDefault] = useState<PizzaType[]>([]);
+	const getDefaultPizza = async () => {
 		const response = await api.get("/pizza_default");
-		setPizzaPopular(response.data);
-		// console.log(response.data);
+		setPizzaDefault(response.data);
 	};
-	useEffect(() => {
-		getPopularPizza();
-	}, []);
 
+	useEffect(() => {
+		getDefaultPizza();
+	}, []);
 	return (
-		<section className={scss.PopularPizza}>
+		<section className={scss.DefaultPizza}>
 			<div className="container">
 				<div className={scss.content}>
+					<div className={scss.all_button}>
+						<button className={scss.pizza_button}>Show All</button>
+						<button className={scss.pizza_button}>Meat</button>
+						<button className={scss.pizza_button}>Vegetarian</button>
+						<button className={scss.pizza_button}>Sea Products</button>
+						<button className={scss.pizza_button}>Mushroom</button>
+					</div>
 					<div className={scss.pizza_list}>
-						{pizzaPopular.map((item) => (
+						{pizzaDefault.map((item) => (
 							<div key={item.id} className={scss.types_of_pizza}>
 								<div className={scss.img_pizza}>
+									{/* <img src={item.image} alt="" /> */}
 									<img src={pizzatype1.src} alt="" />
 								</div>
 								<div className={scss.title}>{item.name}</div>

@@ -28,10 +28,8 @@ const links = [
 
 export const Header: FC = () => {
 	const pathname = usePathname();
-	console.log(pathname);
 
 	const { width } = useWindowSize();
-	// console.log(width);
 
 	const isDesktop = width > 980;
 
