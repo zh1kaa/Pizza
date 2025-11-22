@@ -106,9 +106,10 @@ export const DefaultPizza: FC = () => {
 												description: item.description,
 												price: item.price,
 												currency: item.currency,
-												size: item.sizes[Number(activeButtons) || 0], // если пользователь не выбрал размер, берём первый
-												quantity: counters[item.id] || 1, // если количество не меняли, ставим 1
+												sizes: item.sizes.activeButtons || 0, // если пользователь не выбрал размер, берём первый
+												defaultSize: counters[item.id] || 1, // если количество не меняли, ставим 1
 												image: item.image,
+												category: item.category,
 											})
 										}>
 										order now

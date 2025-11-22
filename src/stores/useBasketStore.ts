@@ -6,9 +6,10 @@ interface BasketItem {
 	description: string;
 	price: number;
 	currency: string;
-	size: number;
-	quantity: number;
+	sizes: number;
+	defaultSize: number;
 	image: string;
+	category: Array<string>;
 }
 interface BasketStore {
 	data: BasketItem[];
@@ -21,14 +22,37 @@ export const useBasketStore = create<BasketStore>((set) => ({
 	) =>
 		set((state) => {
 			const existingIndex = state.data.findIndex(
-				(i) => i.id === item.id && i.size === item.size
+				(i) => i.id === item.id && i.sizes === item.sizes
 			);
 			if (existingIndex !== -1) {
 				const newData = [...state.data];
-				newData[existingIndex].quantity += item.quantity;
+				newData[existingIndex].defaultSize += item.defaultSize;
 				return { data: newData };
 			}
 			return { data: [...state.data, item] };
 		}),
 }));
 //
+
+// interface BasketItem {
+// 	id: number;
+// 	name: string;
+// 	description: string;
+// 	price: number;
+// 	currency: string;
+// 	size: number;
+// 	quantity: number;
+// 	image: string;
+// }
+
+// interface BasketItem {
+// 	id: number;
+// 	name: string;
+// 	description: string;
+// 	price: number;
+// 	currency: string;
+// 	sizes: Array<number>;
+// 	defaultSize: number;
+// 	image: string;
+// 	category: Array<string>;
+// }
