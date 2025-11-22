@@ -19,8 +19,12 @@ interface PizzaType {
 export const DefaultPizza: FC = () => {
 	const [counters, setCounters] = useState<{ [key: number]: number }>({});
 	const [pizzaDefault, setPizzaDefault] = useState<PizzaType[]>([]);
-	const [activeButton, setActiveButton] = useState<number | null>(null);
+	// const [activeButton, setActiveButton] = useState<[key: number] | null>(null);
+	const [activeButtons, setActiveButtons] = useState<{ [key: number]: number }>(
+		{}
+	);
 	const addItemEnd = useBasketStore((state) => state.addItem);
+
 	const getDefaultPizza = async () => {
 		const response = await api.get("/pizza_default");
 		setPizzaDefault(response.data);
@@ -49,9 +53,14 @@ export const DefaultPizza: FC = () => {
 										{item.sizes.map((size, index) => (
 											<button
 												key={index}
-												onClick={() => setActiveButton(index)}
+												onClick={() =>
+													setActiveButtons((prev) => ({
+														...prev,
+														[item.id]: index, // сохраняем выбранный размер для конкретной пиццы
+													}))
+												}
 												className={` ${scss.size_button} ${
-													activeButton === index ? scss.active : ""
+													activeButtons[item.id] === index ? scss.active : ""
 												} `}>
 												{size}
 											</button>
@@ -94,9 +103,10 @@ export const DefaultPizza: FC = () => {
 											addItemEnd({
 												id: item.id,
 												name: item.name,
+												description: item.description,
 												price: item.price,
 												currency: item.currency,
-												size: item.sizes[activeButton ?? 0], // если пользователь не выбрал размер, берём первый
+												size: item.sizes[Number(activeButtons) || 0], // если пользователь не выбрал размер, берём первый
 												quantity: counters[item.id] || 1, // если количество не меняли, ставим 1
 												image: item.image,
 											})

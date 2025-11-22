@@ -3,6 +3,7 @@ import { create } from "zustand";
 interface BasketItem {
 	id: number;
 	name: string;
+	description: string;
 	price: number;
 	currency: string;
 	size: number;

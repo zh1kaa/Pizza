@@ -11,14 +11,19 @@ export const Basket: FC = () => {
 				<div className={scss.content}>
 					{data.map((item) => (
 						<div key={item.id} className={scss.basket_box}>
-							<img
-								src={item.image}
-								alt={item.name}
-								width={"100px"}
-								className={scss.img_pizza}
-							/>
-							<h1 className={scss.title}>{item.name}</h1>
-							<p className={scss.description}>{item.quantity}</p>
+							<div className={scss.left}>
+								{" "}
+								<img
+									src={item.image}
+									alt={item.name}
+									width={"100px"}
+									className={scss.img_pizza}
+								/>
+							</div>
+							<div className={scss.right}>
+								<h1 className={scss.title}>{item.name}</h1>
+								<h2>{item.size}</h2>
+							</div>
 						</div>
 					))}
 				</div>
