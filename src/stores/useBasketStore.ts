@@ -1,0 +1,33 @@
+import { create } from "zustand";
+
+interface BasketItem {
+	id: number;
+	name: string;
+	price: number;
+	currency: string;
+	size: number;
+	quantity: number;
+	image: string;
+}
+interface BasketStore {
+	data: BasketItem[];
+	addItem: (item: BasketItem) => void;
+}
+export const useBasketStore = create<BasketStore>((set) => ({
+	data: [],
+	addItem: (
+		item: BasketItem // <-- указываем тип BasketItem
+	) =>
+		set((state) => {
+			const existingIndex = state.data.findIndex(
+				(i) => i.id === item.id && i.size === item.size
+			);
+			if (existingIndex !== -1) {
+				const newData = [...state.data];
+				newData[existingIndex].quantity += item.quantity;
+				return { data: newData };
+			}
+			return { data: [...state.data, item] };
+		}),
+}));
+//

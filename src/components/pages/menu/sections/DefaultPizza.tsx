@@ -2,6 +2,7 @@
 import { useEffect, useState, type FC } from "react";
 import scss from "./DefaultPizza.module.scss";
 import { api } from "@/api";
+import { useBasketStore } from "@/stores/useBasketStore";
 
 interface PizzaType {
 	id: number;
@@ -18,7 +19,8 @@ interface PizzaType {
 export const DefaultPizza: FC = () => {
 	const [counters, setCounters] = useState<{ [key: number]: number }>({});
 	const [pizzaDefault, setPizzaDefault] = useState<PizzaType[]>([]);
-
+	const [activeButton, setActiveButton] = useState<number | null>(null);
+	const addItemEnd = useBasketStore((state) => state.addItem);
 	const getDefaultPizza = async () => {
 		const response = await api.get("/pizza_default");
 		setPizzaDefault(response.data);
@@ -45,7 +47,14 @@ export const DefaultPizza: FC = () => {
 								<div className={scss.pizza_box}>
 									<div className={scss.size_pizza}>
 										{item.sizes.map((size, index) => (
-											<button key={index}>{size}</button>
+											<button
+												key={index}
+												onClick={() => setActiveButton(index)}
+												className={` ${scss.size_button} ${
+													activeButton === index ? scss.active : ""
+												} `}>
+												{size}
+											</button>
 										))}
 									</div>
 									<button className={scss.ingridients}>+ ingridients</button>
@@ -79,7 +88,21 @@ export const DefaultPizza: FC = () => {
 											</button>
 										</div>
 									</div>
-									<button className={scss.order_now}>order now</button>
+									<button
+										className={scss.order_now}
+										onClick={() =>
+											addItemEnd({
+												id: item.id,
+												name: item.name,
+												price: item.price,
+												currency: item.currency,
+												size: item.sizes[activeButton ?? 0], // если пользователь не выбрал размер, берём первый
+												quantity: counters[item.id] || 1, // если количество не меняли, ставим 1
+												image: item.image,
+											})
+										}>
+										order now
+									</button>
 								</div>
 							</div>
 						))}

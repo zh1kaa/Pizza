@@ -7,21 +7,31 @@ interface PizzaButtonType {
 	id: number;
 	name: string;
 }
+
 export const PizzaButton: FC = () => {
 	const [pizzaButton, setPizzaButton] = useState<PizzaButtonType[]>([]);
+	const [activeButton, setActiveButton] = useState<number | null>(null);
+
 	const getPizzaButton = async () => {
 		const response = await api.get("/pizza_filter");
 		setPizzaButton(response.data);
 	};
+
 	useEffect(() => {
 		getPizzaButton();
 	}, []);
+
 	return (
 		<section className={scss.PizzaButton}>
 			<div className="container">
 				<div className={scss.content}>
 					{pizzaButton.map((item) => (
-						<button key={item.id} className={scss.pizza_button}>
+						<button
+							key={item.id}
+							onClick={() => setActiveButton(item.id)}
+							className={`${scss.pizza_button} ${
+								activeButton === item.id ? scss.active : ""
+							}`}>
 							{item.name}
 						</button>
 					))}

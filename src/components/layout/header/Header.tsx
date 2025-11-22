@@ -68,7 +68,10 @@ export const Header: FC = () => {
 							</button>
 						)}
 						<button className={scss.order_btn}>
-							<ShoppingCart size={30} />
+							<Link className={scss.backet_link} href="/basket">
+								{" "}
+								<ShoppingCart size={30} />
+							</Link>
 						</button>
 					</div>
 				</div>
