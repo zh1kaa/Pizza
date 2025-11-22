@@ -7,7 +7,7 @@ interface BasketItem {
 	price: number;
 	currency: string;
 	sizes: number;
-	defaultSize: number;
+	quantity: number;
 	image: string;
 	category: Array<string>;
 }
@@ -26,7 +26,7 @@ export const useBasketStore = create<BasketStore>((set) => ({
 			);
 			if (existingIndex !== -1) {
 				const newData = [...state.data];
-				newData[existingIndex].defaultSize += item.defaultSize;
+				newData[existingIndex].quantity += item.quantity;
 				return { data: newData };
 			}
 			return { data: [...state.data, item] };

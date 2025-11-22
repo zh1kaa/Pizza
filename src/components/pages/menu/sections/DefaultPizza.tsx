@@ -11,7 +11,7 @@ interface PizzaType {
 	price: number;
 	currency: string;
 	sizes: Array<number>;
-	defaultSize: number;
+	quantity: number;
 	image: string;
 	category: Array<string>;
 }
@@ -107,7 +107,7 @@ export const DefaultPizza: FC = () => {
 												price: item.price,
 												currency: item.currency,
 												sizes: item.sizes.activeButtons || 0, // если пользователь не выбрал размер, берём первый
-												defaultSize: counters[item.id] || 1, // если количество не меняли, ставим 1
+												quantity: counters[item.id] || 1, // если количество не меняли, ставим 1
 												image: item.image,
 												category: item.category,
 											})
