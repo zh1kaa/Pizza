@@ -1,58 +1,46 @@
 import { create } from "zustand";
 
+// Описание одного товара в корзине
 interface BasketItem {
-	id: number;
-	name: string;
-	description: string;
-	price: number;
-	currency: string;
-	sizes: number;
-	quantity: number;
-	image: string;
-	category: Array<string>;
+	id: number; // ID пиццы
+	name: string; // Название пиццы
+	description: string; // Описание
+	price: number; // Цена за одну штуку
+	currency: string; // Валюта (например "₽")
+	sizes: number; // Выбранный размер (число, например 30)
+	quantity: number; // Количество штук
+	image: string; // Ссылка на картинку
+	category: Array<string>; // Категории пиццы (массив строк)
 }
+
+// Описание хранилища корзины
 interface BasketStore {
-	data: BasketItem[];
-	addItem: (item: BasketItem) => void;
+	data: BasketItem[]; // Массив всех товаров в корзине
+	addItem: (item: BasketItem) => void; // Функция для добавления товара
 }
+
+// Создаем глобальное хранилище с помощью zustand
 export const useBasketStore = create<BasketStore>((set) => ({
+	// Начальное состояние - пустая корзина
 	data: [],
-	addItem: (
-		item: BasketItem // <-- указываем тип BasketItem
-	) =>
+
+	// Функция для добавления товара в корзину
+	addItem: (item: BasketItem) =>
 		set((state) => {
-			const existingIndex = state.data.findIndex(
-				(i) => i.id === item.id && i.sizes === item.sizes
+			// Ищем, есть ли уже такая пицца с таким же размером
+			const existingItemIndex = state.data.findIndex(
+				(existingItem) =>
+					existingItem.id === item.id && existingItem.sizes === item.sizes
 			);
-			if (existingIndex !== -1) {
-				const newData = [...state.data];
-				newData[existingIndex].quantity += item.quantity;
-				return { data: newData };
+
+			// Если нашли - увеличиваем количество существующего товара
+			if (existingItemIndex !== -1) {
+				const updatedData = [...state.data]; // Копируем массив
+				updatedData[existingItemIndex].quantity += item.quantity; // Добавляем количество
+				return { data: updatedData }; // Возвращаем обновленное состояние
 			}
+
+			// Если не нашли - добавляем новый товар в конец массива
 			return { data: [...state.data, item] };
 		}),
 }));
-//
-
-// interface BasketItem {
-// 	id: number;
-// 	name: string;
-// 	description: string;
-// 	price: number;
-// 	currency: string;
-// 	size: number;
-// 	quantity: number;
-// 	image: string;
-// }
-
-// interface BasketItem {
-// 	id: number;
-// 	name: string;
-// 	description: string;
-// 	price: number;
-// 	currency: string;
-// 	sizes: Array<number>;
-// 	defaultSize: number;
-// 	image: string;
-// 	category: Array<string>;
-// }
