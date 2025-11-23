@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 
 // Описание одного товара в корзине
 interface BasketItem {
@@ -20,27 +21,35 @@ interface BasketStore {
 }
 
 // Создаем глобальное хранилище с помощью zustand
-export const useBasketStore = create<BasketStore>((set) => ({
-	// Начальное состояние - пустая корзина
-	data: [],
+export const useBasketStore = create<BasketStore>()(
+	persist(
+		(set) => ({
+			// Начальное состояние - пустая корзина
+			data: [],
 
-	// Функция для добавления товара в корзину
-	addItem: (item: BasketItem) =>
-		set((state) => {
-			// Ищем, есть ли уже такая пицца с таким же размером
-			const existingItemIndex = state.data.findIndex(
-				(existingItem) =>
-					existingItem.id === item.id && existingItem.sizes === item.sizes
-			);
+			// Функция для добавления товара в корзину
+			addItem: (item: BasketItem) =>
+				set((state) => {
+					// Ищем, есть ли уже такая пицца с таким же размером
+					const existingItemIndex = state.data.findIndex(
+						(existingItem) =>
+							existingItem.id === item.id && existingItem.sizes === item.sizes
+					);
 
-			// Если нашли - увеличиваем количество существующего товара
-			if (existingItemIndex !== -1) {
-				const updatedData = [...state.data]; // Копируем массив
-				updatedData[existingItemIndex].quantity += item.quantity; // Добавляем количество
-				return { data: updatedData }; // Возвращаем обновленное состояние
-			}
+					// Если нашли - увеличиваем количество существующего товара
+					if (existingItemIndex !== -1) {
+						const updatedData = [...state.data]; // Копируем массив
+						updatedData[existingItemIndex].quantity += item.quantity; // Добавляем количество
+						return { data: updatedData }; // Возвращаем обновленное состояние
+					}
 
-			// Если не нашли - добавляем новый товар в конец массива
-			return { data: [...state.data, item] };
+					// Если не нашли - добавляем новый товар в конец массива
+					return { data: [...state.data, item] };
+				}),
 		}),
-}));
+		{
+			name: "basket-storage",
+			storage: createJSONStorage(() => sessionStorage),
+		}
+	)
+);

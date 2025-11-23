@@ -2,6 +2,7 @@
 import { useEffect, useState, type FC } from "react";
 import scss from "./PizzaButton.module.scss";
 import { api } from "@/api";
+import { useFilterPizzaStore } from "@/stores/useFilterPizzaStore";
 
 interface PizzaButtonType {
 	id: number;
@@ -11,6 +12,8 @@ interface PizzaButtonType {
 export const PizzaButton: FC = () => {
 	const [pizzaButton, setPizzaButton] = useState<PizzaButtonType[]>([]);
 	const [activeButton, setActiveButton] = useState<number | null>(null);
+
+	const { setFilter } = useFilterPizzaStore();
 
 	const getPizzaButton = async () => {
 		const response = await api.get("/pizza_filter");
@@ -28,7 +31,10 @@ export const PizzaButton: FC = () => {
 					{pizzaButton.map((item) => (
 						<button
 							key={item.id}
-							onClick={() => setActiveButton(item.id)}
+							onClick={() => {
+								setActiveButton(item.id);
+								setFilter(item.name);
+							}}
 							className={`${scss.pizza_button} ${
 								activeButton === item.id ? scss.active : ""
 							}`}>
