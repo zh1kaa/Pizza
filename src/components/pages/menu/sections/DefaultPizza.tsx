@@ -3,6 +3,7 @@ import { useEffect, useState, type FC } from "react";
 import scss from "./DefaultPizza.module.scss";
 import { api } from "@/api";
 import { useBasketStore } from "@/stores/useBasketStore";
+import { useFilterPizzaStore } from "@/stores/useFilterPizzaStore";
 
 // Описание одной пиццы из API
 interface PizzaType {
@@ -18,6 +19,8 @@ interface PizzaType {
 }
 
 export const DefaultPizza: FC = () => {
+	const { filter } = useFilterPizzaStore();
+
 	// Список всех пицц, полученных с сервера
 	const [pizzaList, setPizzaList] = useState<PizzaType[]>([]);
 
@@ -36,14 +39,14 @@ export const DefaultPizza: FC = () => {
 
 	// Загрузка списка пицц с сервера
 	const loadPizzas = async () => {
-		const response = await api.get("/pizza_default");
+		const response = await api.get(`/pizza_default?category[]=${filter}`);
 		setPizzaList(response.data);
 	};
 
 	// Загружаем пиццы при первой загрузке компонента
 	useEffect(() => {
 		loadPizzas();
-	}, []);
+	}, [filter]);
 
 	// Увеличить количество пиццы на 1
 	const increaseQuantity = (pizzaId: number) => {

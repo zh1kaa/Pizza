@@ -13,7 +13,7 @@ export const useFilterPizzaStore = create<FilterPizzaType>()(
 			filter: "",
 
 			setFilter: (value) => {
-				console.log(value);
+				set({ filter: value });
 			},
 		}),
 		{
