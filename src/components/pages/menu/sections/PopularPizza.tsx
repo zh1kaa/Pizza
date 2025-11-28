@@ -2,6 +2,7 @@
 import { useEffect, useState, type FC } from "react";
 import scss from "./PopularPizza.module.scss";
 import { api } from "@/api";
+import { useFilterPizzaStore } from "@/stores/useFilterPizzaStore";
 
 interface PizzaType {
 	id: number;
@@ -18,12 +19,13 @@ interface PizzaType {
 export const PopularPizza: FC = () => {
 	const [pizzaPopular, setPizzaPopular] = useState<PizzaType[]>([]);
 	const getPopularPizza = async () => {
-		const response = await api.get("/pizza_popular");
+		const response = await api.get(`/pizza_popular?category[]=${filter}`);
 		setPizzaPopular(response.data);
 	};
+	const { filter } = useFilterPizzaStore();
 	useEffect(() => {
 		getPopularPizza();
-	}, []);
+	}, [filter]);
 
 	return (
 		<section className={scss.PopularPizza}>

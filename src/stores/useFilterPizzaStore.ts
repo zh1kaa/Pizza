@@ -10,7 +10,7 @@ interface FilterPizzaType {
 export const useFilterPizzaStore = create<FilterPizzaType>()(
 	persist(
 		(set) => ({
-			filter: "",
+			filter: "Show All",
 
 			setFilter: (value) => {
 				set({ filter: value });

@@ -11,7 +11,7 @@ interface PizzaButtonType {
 
 export const PizzaButton: FC = () => {
 	const [pizzaButton, setPizzaButton] = useState<PizzaButtonType[]>([]);
-	const [activeButton, setActiveButton] = useState<number | null>(null);
+	const [activeButton, setActiveButton] = useState<number | null>(1);
 
 	const { setFilter } = useFilterPizzaStore();
 
