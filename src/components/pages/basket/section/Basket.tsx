@@ -25,6 +25,9 @@ export const Basket: FC = () => {
 								<h2>{item.sizes}</h2>
 								<h1>{item.quantity}</h1>
 							</div>
+							<div className={scss.price}>
+								<h1>{item.price}</h1>
+							</div>
 						</div>
 					))}
 				</div>

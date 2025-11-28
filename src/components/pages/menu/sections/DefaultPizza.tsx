@@ -25,6 +25,19 @@ export const DefaultPizza: FC = () => {
 
 	const [pizzaList, setPizzaList] = useState<PizzaType[]>([]);
 
+	const [quantities, setQuantities] = useState<{ [pizzaId: number]: number }>(
+		{}
+	);
+
+	const [selectedSizes, setSelectedSizes] = useState<{
+		[pizzaId: number]: number;
+	}>({});
+
+	const [pricePizza, setPricePizza] = useState<{ [pizzaId: number]: number }>(
+		{}
+	);
+	console.log(pricePizza);
+
 	const loadPizzas = async () => {
 		const response = await api.get(`/pizza_default?category[]=${filter}`);
 		setPizzaList(response.data);
@@ -33,14 +46,6 @@ export const DefaultPizza: FC = () => {
 	useEffect(() => {
 		loadPizzas();
 	}, [filter]);
-	const [quantities, setQuantities] = useState<{ [pizzaId: number]: number }>(
-		{}
-	);
-
-	// Внешние функции для Браузера
-	const [selectedSizes, setSelectedSizes] = useState<{
-		[pizzaId: number]: number;
-	}>({});
 
 	const increaseQuantity = (pizzaId: number) => {
 		setQuantities((prev) => ({
@@ -63,13 +68,20 @@ export const DefaultPizza: FC = () => {
 		}));
 	};
 
+	const handlePrice = (item: PizzaType) => {
+		setPricePizza((prev) => ({
+			...prev,
+			[item.id]: item.price * quantities[item.id],
+		}));
+	};
+
 	const handleAddToBasket = (item: PizzaType) => {
 		const updateSizes: PizzaType = {
 			...item,
 			sizes: [selectedSizes[item.id]],
 			quantity: quantities[item.id],
+			price: pricePizza[item.id],
 		};
-
 		addToBasket(updateSizes);
 	};
 
@@ -96,7 +108,7 @@ export const DefaultPizza: FC = () => {
 													key={index}
 													onClick={() => selectSize(pizza, index)}
 													className={`${scss.size_button} `}>
-													{pizza.sizes}
+													{size}
 												</button>
 											))}
 										</div>
@@ -109,7 +121,10 @@ export const DefaultPizza: FC = () => {
 											<div className={scss.quantity}>
 												<button
 													className={scss.quantity_button}
-													onClick={() => increaseQuantity(pizza.id)}>
+													onClick={() => {
+														increaseQuantity(pizza.id);
+														handlePrice(pizza);
+													}}>
 													+
 												</button>
 												<span className={scss.quantity_number}>
