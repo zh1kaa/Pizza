@@ -73,6 +73,7 @@ export const DefaultPizza: FC = () => {
 			...prev,
 			[item.id]: item.price * quantities[item.id],
 		}));
+		console.log(item.price);
 	};
 
 	const handleAddToBasket = (item: PizzaType) => {
@@ -82,6 +83,8 @@ export const DefaultPizza: FC = () => {
 			quantity: quantities[item.id],
 			price: pricePizza[item.id],
 		};
+		console.log(item.price);
+
 		addToBasket(updateSizes);
 	};
 
@@ -90,63 +93,64 @@ export const DefaultPizza: FC = () => {
 			<div className="container">
 				<div className={scss.content}>
 					<div className={scss.pizza_list}>
-						{pizzaList.map((pizza) => {
-							return (
-								<div key={pizza.id} className={scss.types_of_pizza}>
-									<img
-										className={scss.img_pizza}
-										src={pizza.image}
-										alt={pizza.name}
-									/>
-									<h1 className={scss.title}>{pizza.name}</h1>
-									<p className={scss.description}>{pizza.description}</p>
+						{pizzaList.map((pizza) => (
+							<div key={pizza.id} className={scss.types_of_pizza}>
+								<img
+									className={scss.img_pizza}
+									src={pizza.image}
+									alt={pizza.name}
+								/>
+								<h1 className={scss.title}>{pizza.name}</h1>
+								<p className={scss.description}>{pizza.description}</p>
 
-									<div className={scss.pizza_box}>
-										<div className={scss.size_pizza}>
-											{pizza.sizes.map((size, index) => (
-												<button
-													key={index}
-													onClick={() => selectSize(pizza, index)}
-													className={`${scss.size_button} `}>
-													{size}
-												</button>
-											))}
-										</div>
-										<button className={scss.ingridients}>+ ingredients</button>
-										<div className={scss.pizza_selection}>
-											<span className={scss.price}>
-												{pizza.price} {pizza.currency}
-											</span>
-
-											<div className={scss.quantity}>
-												<button
-													className={scss.quantity_button}
-													onClick={() => {
-														increaseQuantity(pizza.id);
-														handlePrice(pizza);
-													}}>
-													+
-												</button>
-												<span className={scss.quantity_number}>
-													{quantities[pizza.id] || 0}
-												</span>
-												<button
-													className={scss.quantity_button}
-													onClick={() => decreaseQuantity(pizza.id)}>
-													-
-												</button>
-											</div>
-										</div>
-
-										<button
-											className={scss.order_now}
-											onClick={() => handleAddToBasket(pizza)}>
-											order now
-										</button>
+								<div className={scss.pizza_box}>
+									<div className={scss.size_pizza}>
+										{pizza.sizes.map((size, index) => (
+											<button
+												key={index}
+												onClick={() => selectSize(pizza, index)}
+												className={`${scss.size_button} `}>
+												{size}
+											</button>
+										))}
 									</div>
+									<button className={scss.ingridients}>+ ingredients</button>
+									<div className={scss.pizza_selection}>
+										<span className={scss.price}>
+											{pizza.price} {pizza.currency}
+										</span>
+
+										<div className={scss.quantity}>
+											<button
+												className={scss.quantity_button}
+												onClick={() => {
+													increaseQuantity(pizza.id);
+													handlePrice(pizza);
+												}}>
+												+
+											</button>
+											<span className={scss.quantity_number}>
+												{quantities[pizza.id] || 0}
+											</span>
+											<button
+												className={scss.quantity_button}
+												onClick={() => {
+													decreaseQuantity(pizza.id);
+													handlePrice(pizza);
+												}}>
+												-
+											</button>
+										</div>
+									</div>
+
+									<button
+										className={scss.order_now}
+										onClick={() => handleAddToBasket(pizza)}>
+										order now
+									</button>
 								</div>
-							);
-						})}
+							</div>
+						))}
 					</div>
 				</div>
 			</div>

@@ -3,7 +3,32 @@
 	.pizza_list {
 		display: flex;
 		justify-content: space-between;
+		gap: 20px;
+		@media (max-width: 1280px) {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			// gap: 20px;
+		}
+		@media (max-width: 625px) {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
 		.types_of_pizza {
+			@media (max-width: 1213px) {
+				width: 100%;
+				max-width: 400px;
+			}
+			@media (max-width: 865px) {
+				width: 40%;
+				max-width: 400px;
+			}
+			@media (max-width: 625px) {
+				width: 100%;
+				max-width: 400px;
+			}
+
 			padding: clamp(10px, 2vw, 25px);
 			position: relative;
 			display: flex;
