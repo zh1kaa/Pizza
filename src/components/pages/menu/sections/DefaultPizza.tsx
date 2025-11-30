@@ -47,19 +47,41 @@ export const DefaultPizza: FC = () => {
 		loadPizzas();
 	}, [filter]);
 
-	const increaseQuantity = (pizzaId: number) => {
+	const increaseQuantity = (pizzaId: number, pizzaPrice: number) => {
+		const newData = (quantities[pizzaId] || 1) + 1;
 		setQuantities((prev) => ({
 			...prev,
-			[pizzaId]: (prev[pizzaId] || 1) + 1,
+			[pizzaId]: newData,
+		}));
+		setPricePizza((prev) => ({
+			...prev,
+			[pizzaId]: pizzaPrice * newData,
 		}));
 	};
 
-	const decreaseQuantity = (pizzaId: number) => {
+	const decreaseQuantity = (pizzaId: number, pizzaPrice: number) => {
+		const newData = Math.max(0, (quantities[pizzaId] || 1) - 1);
 		setQuantities((prev) => ({
 			...prev,
-			[pizzaId]: Math.max(0, (prev[pizzaId] || 1) - 1),
+			[pizzaId]: newData,
+		}));
+		setPricePizza((prev) => ({
+			...prev,
+			[pizzaId]: pizzaPrice * newData,
 		}));
 	};
+
+	// const decreaseQuantity = (pizzaId: number, pizzaPrice: number) => {
+	// 	const newQuantity = Math.max(0, (quantities[pizzaId] || 1) - 1);
+	// 	setQuantities((prev) => ({
+	// 		...prev,
+	// 		[pizzaId]: newQuantity,
+	// 	}));
+	// 	setPricePizza((prev) => ({
+	// 		...prev,
+	// 		[pizzaId]: pizzaPrice * newQuantity,
+	// 	}));
+	// };
 
 	const selectSize = (pizza: PizzaType, sizeIndex: number) => {
 		setSelectedSizes((prev) => ({
@@ -68,20 +90,12 @@ export const DefaultPizza: FC = () => {
 		}));
 	};
 
-	const handlePrice = (item: PizzaType) => {
-		setPricePizza((prev) => ({
-			...prev,
-			[item.id]: item.price * quantities[item.id],
-		}));
-		console.log(item.price);
-	};
-
 	const handleAddToBasket = (item: PizzaType) => {
 		const updateSizes: PizzaType = {
 			...item,
-			sizes: [selectedSizes[item.id]],
-			quantity: quantities[item.id],
-			price: pricePizza[item.id],
+			sizes: [selectedSizes[item.id] || item.sizes[0]],
+			quantity: quantities[item.id] || 1,
+			price: pricePizza[item.id] || item.price,
 		};
 		console.log(item.price);
 
@@ -124,19 +138,17 @@ export const DefaultPizza: FC = () => {
 											<button
 												className={scss.quantity_button}
 												onClick={() => {
-													increaseQuantity(pizza.id);
-													handlePrice(pizza);
+													increaseQuantity(pizza.id, pizza.price);
 												}}>
 												+
 											</button>
 											<span className={scss.quantity_number}>
-												{quantities[pizza.id] || 0}
+												{quantities[pizza.id] || 1}
 											</span>
 											<button
 												className={scss.quantity_button}
 												onClick={() => {
-													decreaseQuantity(pizza.id);
-													handlePrice(pizza);
+													decreaseQuantity(pizza.id, pizza.price);
 												}}>
 												-
 											</button>
