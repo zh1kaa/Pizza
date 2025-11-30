@@ -50,14 +50,14 @@ export const DefaultPizza: FC = () => {
 	const increaseQuantity = (pizzaId: number) => {
 		setQuantities((prev) => ({
 			...prev,
-			[pizzaId]: (prev[pizzaId] || 0) + 1,
+			[pizzaId]: (prev[pizzaId] || 1) + 1,
 		}));
 	};
 
 	const decreaseQuantity = (pizzaId: number) => {
 		setQuantities((prev) => ({
 			...prev,
-			[pizzaId]: Math.max(0, (prev[pizzaId] || 0) - 1),
+			[pizzaId]: Math.max(0, (prev[pizzaId] || 1) - 1),
 		}));
 	};
 
