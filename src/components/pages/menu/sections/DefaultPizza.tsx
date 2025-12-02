@@ -71,17 +71,16 @@ export const DefaultPizza: FC = () => {
 		}));
 	};
 
-	// const decreaseQuantity = (pizzaId: number, pizzaPrice: number) => {
-	// 	const newQuantity = Math.max(0, (quantities[pizzaId] || 1) - 1);
-	// 	setQuantities((prev) => ({
-	// 		...prev,
-	// 		[pizzaId]: newQuantity,
-	// 	}));
-	// 	setPricePizza((prev) => ({
-	// 		...prev,
-	// 		[pizzaId]: pizzaPrice * newQuantity,
-	// 	}));
-	// };
+	const decreaseQuantity2 = (pizzaId: number, pizzaPrice: number) => {
+		setQuantities((prev) => ({
+			...prev,
+			[pizzaId]: Math.max(0, (quantities[pizzaId] || 1) - 1),
+		}));
+		setPricePizza((prev) => ({
+			...prev,
+			[pizzaId]: pizzaPrice * quantities[pizzaId],
+		}));
+	};
 
 	const selectSize = (pizza: PizzaType, sizeIndex: number) => {
 		setSelectedSizes((prev) => ({

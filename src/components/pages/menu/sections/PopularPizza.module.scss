@@ -1,33 +1,48 @@
 .PopularPizza .content {
-	// padding-block: 60px;
 	margin-block: 100px;
 	.pizza_list {
 		display: flex;
 		justify-content: space-between;
-		@media (max-width: 1155px) {
+		gap: 20px;
+		@media (max-width: 1280px) {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
+			// gap: 20px;
 		}
-		.types_of_pizza {
-			// position: relative;
+		@media (max-width: 625px) {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+		}
+		.types_of_pizza {
+			@media (max-width: 1213px) {
+				width: 100%;
+				max-width: 400px;
+			}
+			@media (max-width: 865px) {
+				width: 40%;
+				max-width: 400px;
+			}
+			@media (max-width: 625px) {
+				width: 100%;
+				max-width: 400px;
+			}
+
+			padding: clamp(10px, 2vw, 25px);
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			align-items: center;
 			gap: 10px;
-			justify-content: center;
-			// width: 297px;
-			// height: 459px;
 			border-radius: 29.53px;
 			background: rgba(33, 10, 1, 1);
 			.img_pizza {
-				// position: absolute;
-				// top: -50px;
 				width: 100%;
 				max-width: 150px;
 			}
 			.title {
-				// margin-top: 80px;
 				color: rgba(255, 255, 255, 1);
 				font-size: 25.1px;
 				font-weight: 500;
@@ -52,7 +67,7 @@
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					button {
+					.size_button {
 						width: 40px;
 						height: 40px;
 						border-radius: 84.37px;
@@ -70,6 +85,7 @@
 						}
 					}
 				}
+
 				.ingridients {
 					display: flex;
 					align-items: center;
@@ -84,7 +100,7 @@
 						rgba(255, 100, 50, 1),
 						rgba(255, 162, 40, 1) 100%
 					);
-					-webkit-background-clip: text;
+					// -webkit-background-clip: text;
 					color: transparent;
 				}
 				.pizza_selection {
