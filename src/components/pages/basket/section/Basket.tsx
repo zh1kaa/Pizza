@@ -14,13 +14,7 @@ export const Basket: FC = () => {
 							<div className={scss.selected_pizza} key={item.id}>
 								<div className={scss.left}>
 									{" "}
-									<img
-										className={scss.img_pizza}
-										src={item.image}
-										alt=""
-										width="150"
-										height="150"
-									/>
+									<img className={scss.img_pizza} src={item.image} alt="" />
 								</div>
 								<div className={scss.right}>
 									<h1 className={scss.title}>{item.name}</h1>

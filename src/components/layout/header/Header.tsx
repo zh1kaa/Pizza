@@ -61,7 +61,9 @@ export const Header: FC = () => {
 					) : null}
 					<div className={scss.right}>
 						{isDesktop ? (
-							<button className={scss.log_in}>Log in</button>
+							<button className={scss.log_in}>
+								<Link href="/login">log in</Link>
+							</button>
 						) : (
 							<button>
 								<Hamburger />

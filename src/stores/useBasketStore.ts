@@ -9,7 +9,7 @@ interface BasketItem {
 	description: string;
 	price: number;
 	currency: string;
-	sizes: Array<number>; // Доступные размеры (например [25, 30, 35])
+	sizes: [number]; // Доступные размеры (например [25, 30, 35])
 	image: string;
 	category: Array<string>;
 
@@ -31,12 +31,14 @@ export const useBasketStore = create<BasketStore>()(
 					// Ищем, есть ли уже такая пицца с таким же размером
 					const existingItemIndex = state.data.findIndex(
 						(existingItem) =>
-							existingItem.id === item.id && existingItem.sizes === item.sizes
+							existingItem.id === item.id &&
+							existingItem.sizes[0] === item.sizes[0]
 					);
 					// Если нашли - увеличиваем количество существующего товара
 					if (existingItemIndex !== -1) {
 						const updatedData = [...state.data]; // Копируем массив
 						updatedData[existingItemIndex].quantity += item.quantity; // Добавляем количество
+						updatedData[existingItemIndex].price += item.price; // Обновляем цену
 						return { data: updatedData }; // Возвращаем обновленное состояние
 					}
 					// Если не нашли - добавляем новый товар в конец массива
@@ -49,5 +51,3 @@ export const useBasketStore = create<BasketStore>()(
 		}
 	)
 );
-
-// [25] = [25]
