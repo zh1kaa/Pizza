@@ -2,8 +2,11 @@
 import type { FC } from "react";
 import scss from "./Log_in.module.scss";
 import { useLoginStore } from "@/stores/useLoginStore";
+import { useRouter } from "next/navigation";
 
 export const Log_in: FC = () => {
+	const router = useRouter();
+
 	const {
 		name,
 		email,
@@ -15,26 +18,41 @@ export const Log_in: FC = () => {
 		setPassword,
 	} = useLoginStore();
 
+	const handleLogin = () => {
+		login();
+		router.push("/");
+	};
+
 	return (
 		<section className={scss.Log_in}>
 			<div className="container">
 				<div className={scss.content}>
-					<input
-						value={name}
-						onChange={(item) => setName(item.target.value)}
-						type="text"
-					/>
-					<input
-						value={email}
-						onChange={(item) => setEmail(item.target.value)}
-						type="text"
-					/>
-					<input
-						value={password}
-						onChange={(item) => setPassword(item.target.value)}
-						type="text"
-					/>
-					<button onClick={login}>log in</button>
+					<div className={scss.status}>
+						<input
+							className={scss.checkbox}
+							value={name}
+							onChange={(item) => setName(item.target.value)}
+							placeholder="Введите имя"
+							type="text"
+						/>
+						<input
+							className={scss.checkbox}
+							value={email}
+							onChange={(item) => setEmail(item.target.value)}
+							placeholder="Введите email"
+							type="text"
+						/>
+						<input
+							className={scss.checkbox}
+							value={password}
+							onChange={(item) => setPassword(item.target.value)}
+							placeholder="Введите пароль"
+							type="password"
+						/>
+						<button className={scss.sign_up} onClick={handleLogin}>
+							log in
+						</button>
+					</div>
 				</div>
 			</div>
 		</section>
