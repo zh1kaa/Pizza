@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useWindowSize } from "react-use";
 import { Hamburger, ShoppingCart } from "lucide-react";
+import { useLoginStore } from "@/stores/useLoginStore";
 
 const links = [
 	{
@@ -31,6 +32,13 @@ export const Header: FC = () => {
 	const { width } = useWindowSize();
 
 	const isDesktop = width > 980;
+
+	const {
+		name,
+
+		isLoggedIn,
+		login,
+	} = useLoginStore();
 
 	return (
 		<header className={scss.Header}>
@@ -61,9 +69,13 @@ export const Header: FC = () => {
 					) : null}
 					<div className={scss.right}>
 						{isDesktop ? (
-							<button className={scss.log_in}>
-								<Link href="/login">log in</Link>
-							</button>
+							isLoggedIn ? (
+								<div className={scss.username}>{name}</div>
+							) : (
+								<button className={scss.log_in}>
+									<Link href="/login">log in</Link>
+								</button>
+							)
 						) : (
 							<button>
 								<Hamburger />
