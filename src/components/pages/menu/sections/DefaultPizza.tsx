@@ -94,7 +94,7 @@ export const DefaultPizza: FC = () => {
 		<section className={scss.DefaultPizza}>
 			<div className="container">
 				<div className={scss.content}>
-					<div className={scss.pizza_list}>
+					<div className={`${scss.pizza_list} ${filter ? scss.filtered : ""}`}>
 						{pizzaList.map((pizza) => (
 							<div key={pizza.id} className={scss.types_of_pizza}>
 								<img

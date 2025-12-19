@@ -6,7 +6,7 @@ export const EventsPage: FC = () => {
 	return (
 		<>
 			<IndState />
-			{/* <Blog /> */}
+			<Blog />
 		</>
 	);
 };

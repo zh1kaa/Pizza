@@ -3,7 +3,13 @@
 	.pizza_list {
 		display: flex;
 		justify-content: space-between;
-		gap: 20px;
+			flex-wrap: wrap;
+		gap: 30px;
+		&.filtered {
+			justify-content: flex-start;
+			// Или center, в зависимости от вашей задачи
+		}
+
 		@media (max-width: 1280px) {
 			display: flex;
 			flex-wrap: wrap;

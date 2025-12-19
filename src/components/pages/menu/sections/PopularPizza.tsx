@@ -18,7 +18,7 @@ interface PizzaType {
 	category: [string];
 }
 
-export const DefaultPizza: FC = () => {
+export const PopularPizza: FC = () => {
 	const { filter } = useFilterPizzaStore();
 
 	const addToBasket = useBasketStore((state) => state.addItem);
@@ -55,7 +55,7 @@ export const DefaultPizza: FC = () => {
 		}));
 		setPricePizza((prev) => ({
 			...prev,
-			[pizzaId]: pizzaPrice * newData,
+			[pizzaId]: Math.round(pizzaPrice * newData),
 		}));
 	};
 
@@ -67,18 +67,7 @@ export const DefaultPizza: FC = () => {
 		}));
 		setPricePizza((prev) => ({
 			...prev,
-			[pizzaId]: pizzaPrice * newData,
-		}));
-	};
-
-	const decreaseQuantity2 = (pizzaId: number, pizzaPrice: number) => {
-		setQuantities((prev) => ({
-			...prev,
-			[pizzaId]: Math.max(0, (quantities[pizzaId] || 1) - 1),
-		}));
-		setPricePizza((prev) => ({
-			...prev,
-			[pizzaId]: pizzaPrice * quantities[pizzaId],
+			[pizzaId]: Math.round(pizzaPrice * newData),
 		}));
 	};
 
