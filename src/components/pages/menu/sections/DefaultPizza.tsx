@@ -142,7 +142,6 @@ export const DefaultPizza: FC = () => {
 											</button>
 										</div>
 									</div>
-
 									<button
 										className={scss.order_now}
 										onClick={() => handleAddToBasket(pizza)}>

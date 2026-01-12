@@ -11,11 +11,15 @@ export const Blog: FC = () => {
 				<div className={scss.content}>
 					<div className={scss.block}>
 						<Image className={scss.Image} src={cook} alt="blogImage" />
-						<h1 className={scss.description}>HOW WE COOKING</h1>
+						<h1 className={scss.description}>
+							HOW WE <br /> COOKING
+						</h1>
+						<button className={scss.block_button}>More</button>
 					</div>
 					<div className={scss.block}>
 						<Image className={scss.Image} src={blogImage} alt="blogImage" />
 						<h1 className={scss.description}>OUR BLOG</h1>
+						<button className={scss.block_button}>More</button>
 					</div>
 					<div className={scss.titleBlock}>
 						<h1 className={scss.title}> Events</h1>
