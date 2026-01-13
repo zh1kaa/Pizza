@@ -47,7 +47,7 @@ export const Header: FC = () => {
 				<div className={scss.content}>
 					<div className={scss.left}>
 						<Link className={scss.link_to_home} href="/">
-							pizzashop
+							pizzashop zh1ka
 						</Link>
 					</div>
 					{isDesktop ? (
