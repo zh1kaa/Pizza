@@ -50,6 +50,12 @@
 			align-items: center;
 			justify-content: center;
 			gap: 26px;
+			.delete {
+				background: #ff5d29;
+				border-radius: 50%;
+				width: 40px;
+				height: 40px;
+			}
 			.log_in {
 				width: 163;
 				height: 40;

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useWindowSize } from "react-use";
 import { Hamburger, ShoppingCart } from "lucide-react";
 import { useLoginStore } from "@/stores/useLoginStore";
+import { Trash } from "lucide-react";
 
 const links = [
 	{
@@ -70,7 +71,15 @@ export const Header: FC = () => {
 					<div className={scss.right}>
 						{isDesktop ? (
 							isLoggedIn ? (
-								<div className={scss.username}>{name}</div>
+								<>
+									<div className={scss.username}>{name}</div>
+									<button
+										className={scss.delete}
+										onClick={() => useLoginStore.getState().clean()}>
+										{" "}
+										<Trash />{" "}
+									</button>
+								</>
 							) : (
 								<button className={scss.log_in}>
 									<Link href="/login">log in</Link>

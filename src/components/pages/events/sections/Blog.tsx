@@ -4,6 +4,7 @@ import scss from "./Blog.module.scss";
 import Image from "next/image";
 import blogImage from "@/assets/blog.png";
 import cook from "@/assets/cook.png";
+import egg from "@/assets/egg and bacon.png";
 export const Blog: FC = () => {
 	return (
 		<section className={scss.Blog}>
@@ -16,6 +17,7 @@ export const Blog: FC = () => {
 								HOW WE <br /> COOKING
 							</h1>
 							<button className={scss.block_button}>More</button>
+							<Image className={scss.egg} src={egg} alt="egg" />
 						</div>
 						<div className={scss.block}>
 							<Image className={scss.Image} src={blogImage} alt="blogImage" />

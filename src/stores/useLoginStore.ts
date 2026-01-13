@@ -6,6 +6,7 @@ interface LoginStore {
 	email: string;
 	password: string;
 	isLoggedIn: boolean;
+	clean: () => void;
 	login: () => void;
 	setName: (name: string) => void;
 	setEmail: (email: string) => void;
@@ -19,10 +20,12 @@ export const useLoginStore = create<LoginStore>()(
 			email: "",
 			password: "",
 			isLoggedIn: false,
-			login: () => set({ isLoggedIn: true }),
+			clean: () =>
+				set({ name: "", email: "", password: "", isLoggedIn: false }),
 			setName: (name: string) => set({ name }),
 			setEmail: (email: string) => set({ email }),
 			setPassword: (password: string) => set({ password }),
+			login: () => set({ isLoggedIn: true }),
 		}),
 		{
 			name: "login-storage",

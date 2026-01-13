@@ -3,18 +3,16 @@
 	.pizza_list {
 		display: flex;
 		justify-content: space-between;
-			flex-wrap: wrap;
+		flex-wrap: wrap;
 		gap: 30px;
 		&.filtered {
 			justify-content: flex-start;
-			// Или center, в зависимости от вашей задачи
 		}
 
 		@media (max-width: 1280px) {
 			display: flex;
 			flex-wrap: wrap;
 			justify-content: center;
-			// gap: 20px;
 		}
 		@media (max-width: 625px) {
 			display: flex;
